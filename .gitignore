@@ -1,1 +1,10 @@
 # dataset
+./datasets
+# tensorboard logs
+./runs
+# virtualenv
+./venv
+# moodel files
+*.pth
+
+./etc

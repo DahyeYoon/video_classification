@@ -1,0 +1,37 @@
+Description: 'Configuration for training'
+Hyperparams:
+  nEpochs : 100  
+  resume_epoch : 0 
+  save_epoch : 10 
+  lr : 1.0e-3 
+  momentum : 0.9
+  weight_decay : 5.0e-4
+  step_size : 10
+  gamma : 0.1
+  optimizer: SGD
+  scheduler: StepLR
+
+Datasets:
+  HMDB51:
+        video_path : 'datasets/HMDB/video_data/'
+        annotation_path : 'datasets/HMDB/test_train_splits'
+        classInd_path: None
+        num_classes : 51
+  HMDB_UCF:
+      video_path : 'datasets/HMDB_UCFVER/video_data/'
+      annotation_path : 'datasets/HMDB_UCFVER/hmdbTrainTestlists'
+      classInd_path: 'datasets/HMDB_UCFVER/hmdbTrainTestlists/classInd.txt'
+      num_classes : 51
+  UCF101:
+        video_path: 'datasets/UCF101/video_data'
+        annotation_path : 'datasets/UCF101/ucfTrainTestlist/'
+        classInd_path: 'datasets/UCF101/ucfTrainTestlist/classInd.txt'
+        num_classes : 101
+  Hyperparams:
+    num_frames : 16 
+    clip_steps : 1
+    num_workers : 0
+    batch_size: 4
+    shuffle: True
+    height: 112
+    width: 112
