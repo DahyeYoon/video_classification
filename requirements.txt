@@ -1,0 +1,17 @@
+# brew install ffmpeg 
+#-- install pytorch nightly for installing torchvision from source
+numpy
+--pre torch -f https://download.pytorch.org/whl/nightly/cu102/torch_nightly.html
+torchaudio
+# --- install torchvision from source to use VideoReader
+# git clone https://github.com/pytorch/vision.git
+# if os is nuix, remove 'sys.platform != "linux"' in line # 349 of setup.py 
+# it does not work on python3.9
+#MACOSX_DEPLOYMENT_TARGET=10.9 CC=clang CXX=clang++ python setup.py install
+# --- 
+av
+requests
+tensorboard
+PyYAML
+torchsummary
+torchinfo
