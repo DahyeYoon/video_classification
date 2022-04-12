@@ -17,11 +17,6 @@ Datasets:
         annotation_path : 'datasets/HMDB/test_train_splits'
         classInd_path: None
         num_classes : 51
-  HMDB_UCF:
-      video_path : 'datasets/HMDB_UCFVER/video_data/'
-      annotation_path : 'datasets/HMDB_UCFVER/hmdbTrainTestlists'
-      classInd_path: 'datasets/HMDB_UCFVER/hmdbTrainTestlists/classInd.txt'
-      num_classes : 51
   UCF101:
         video_path: 'datasets/UCF101/video_data'
         annotation_path : 'datasets/UCF101/ucfTrainTestlist/'
