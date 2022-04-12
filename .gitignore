@@ -7,4 +7,6 @@ venv/
 # moodel files
 *.pth
 
+*.DS_Store
+__pycache__/
 etc/
