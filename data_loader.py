@@ -3,7 +3,7 @@ import os
 from typing import Optional, Callable, Tuple, cast, Union, Dict, Any, List
 
 from torch import Tensor
-
+import torch
 from torchvision.datasets.video_utils import VideoClips
 from torchvision.datasets.vision import VisionDataset
 from torchvision.datasets.folder import find_classes, make_dataset
@@ -63,6 +63,7 @@ class CUSTOM_DATASET(VisionDataset):
 
         extensions = ("avi",)
 
+
         is_dir=os.path.isdir(os.path.join(self.root, os.listdir(self.root)[0]))
         if is_dir:
             self.classes, class_to_idx = find_classes(self.root)
@@ -75,8 +76,8 @@ class CUSTOM_DATASET(VisionDataset):
             self.classInd_path =classInd_path
             self.classes, class_to_idx = self._find_classes_from_clsfile(self.root, self.classInd_path)
             self.samples= self._make_dataset(self.root, class_to_idx, extensions, is_valid_file=None)
-
         video_paths = [path for (path, _) in self.samples]
+ 
         video_clips = VideoClips(
             video_paths,
             frames_per_clip,
@@ -89,11 +90,13 @@ class CUSTOM_DATASET(VisionDataset):
             _video_min_dimension=_video_min_dimension,
             _audio_samples=_audio_samples,
         )
+        # import torch
+        # video_clips=torch.load('./video_clips.pth')
 
         self.dataset_name=dataset_name
         self.full_video_clips = video_clips
-        self.fold = fold
         self.train = train
+        self.fold = fold
         self.indices = self._select_fold(video_paths, annotation_path, fold, train)
         self.video_clips = video_clips.subset(self.indices)
         self.transform = transform
@@ -126,6 +129,7 @@ class CUSTOM_DATASET(VisionDataset):
 
         if not classes:
             raise FileNotFoundError(f"Couldn't find any class folder in {directory}.")
+        torch.save(class_to_idx, 'class_to_idx.pth')
 
         return classes, class_to_idx
 
@@ -171,8 +175,6 @@ class CUSTOM_DATASET(VisionDataset):
         available_classes = set()
         flist=sorted(os.listdir(directory))
 
-
-        # ======= for HMDB_UCF========
         for file in flist:
             for target_class in classes_lower:
                 if target_class in file.lower():
