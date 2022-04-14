@@ -7,7 +7,11 @@ import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
 def get_dataset(dataset_name, dataset_cfg, mode, device):
-    video_path, annotation_path, num_classes,classInd_path = dataset_cfg[dataset_name]['video_path'], dataset_cfg[dataset_name]['annotation_path'], dataset_cfg[dataset_name]['num_classes'], dataset_cfg[dataset_name]['classInd_path']
+    
+    video_path = dataset_cfg[dataset_name]['video_path']
+    annotation_path = dataset_cfg[dataset_name]['annotation_path']
+    num_classes = dataset_cfg[dataset_name]['num_classes']
+    classInd_path = dataset_cfg[dataset_name]['classInd_path']
 
     num_frames=dataset_cfg['Hyperparams']['num_frames']
     clip_steps=dataset_cfg['Hyperparams']['clip_steps']
@@ -17,8 +21,6 @@ def get_dataset(dataset_name, dataset_cfg, mode, device):
 
     if device=='cpu': pin_memory=False
     else: pin_memory=True
-
-
 
     if mode == 'train':
         train_transforms = torchvision.transforms.Compose([
@@ -41,7 +43,7 @@ def get_dataset(dataset_name, dataset_cfg, mode, device):
         val_loader = DataLoader(valset, batch_size=batch_size, shuffle=shuffle, num_workers=num_workers, pin_memory=pin_memory)
         return [train_loader, val_loader], num_classes
 
-    else:
+    elif mode == 'test':
         test_transforms = torchvision.transforms.Compose([T.ToFloatTensorInZeroOne(), T.Resize((112, 112)),
                                                     T.Normalize(mean=[0.485, 0.456, 0.406],std=[0.229, 0.224, 0.225])])
 
@@ -50,5 +52,4 @@ def get_dataset(dataset_name, dataset_cfg, mode, device):
         test_loader = DataLoader(test_dataset, batch_size=batch_size, 
         shuffle=False, num_workers=num_workers, pin_memory=pin_memory)
         return test_loader, num_classes
-
     
