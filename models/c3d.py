@@ -7,7 +7,7 @@ class C3D(nn.Module):
     C3D network.
     """
 
-    def __init__(self, num_classes, pretrained=None):
+    def __init__(self, num_classes=101, pretrained=None, init_weight=False):
         super(C3D, self).__init__()
 
         self.layer1 = nn.Sequential(nn.Conv3d(3, 64, kernel_size=(3, 3, 3), padding=(1, 1, 1)), nn.ReLU(),nn.MaxPool3d(kernel_size=(1, 2, 2), stride=(1, 2, 2)))
@@ -30,10 +30,10 @@ class C3D(nn.Module):
         self.fc7 = nn.Sequential(nn.Linear(4096, 4096), nn.ReLU(), nn.Dropout(p=0.5))
         self.fc8 = nn.Linear(4096, num_classes)
 
-        self._init_weight()
-
-        if pretrained:
-            self._load_pretrained_weights(pretrained)
+        # if pretrained:
+        #     self._load_pretrained_weights(pretrained)
+        if init_weight:
+            self._init_weight()
 
 
     def forward(self, x):
@@ -52,12 +52,14 @@ class C3D(nn.Module):
 
         return out
 
+    def from_pretrained(self, pretrained_model_path):
+        self._load_pretrained_weights(pretrained_model_path)
+        return self
 
     def _load_pretrained_weights(self, pretrained_model_path):
          checkpoint = torch.load(pretrained_model_path, map_location=lambda storage, loc: storage)   
          c3d_state_dict=iter(list(self.state_dict().keys()))
          state_dict = OrderedDict()
-
 
          premodel_last_layer_name=list(checkpoint.items())[-1][0].split('.')
          for k, v in checkpoint.items():
