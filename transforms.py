@@ -18,7 +18,7 @@ def center_crop(vid, output_size):
 def hflip(vid):
     return vid.flip(dims=(-1,))
 
-
+# 
 # NOTE: for those functions, which generally expect mini-batches, we keep them
 # as non-minibatch so that they are applied as if they were 4d (thus image).
 # this way, we only apply the transformation in the spatial domain
@@ -120,3 +120,15 @@ class Pad(object):
 
     def __call__(self, vid):
         return pad(vid, self.padding, self.fill)
+
+class DemoTransforms(object):
+    def __init__(self, mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225],size=(112,112)):
+        self.mean = mean
+        self.std = std
+        self.size= size
+
+    def __call__(self, vid):
+        vid=to_normalized_float_tensor(vid)
+        vid=resize(vid,self.size)
+        vid=normalize(vid,self.mean,self.std)
+        return vid[None, :, :, :,:]
