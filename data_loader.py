@@ -202,14 +202,14 @@ class CUSTOM_DATASET(VisionDataset):
         return self.video_clips.num_clips()
 
     def __getitem__(self, idx: int) -> Tuple[Tensor, Tensor, int]:
-        video, audio, _, video_idx = self.video_clips.get_clip(idx)
+        video, _, _, video_idx = self.video_clips.get_clip(idx)
         sample_index = self.indices[video_idx]
         _, class_index = self.samples[sample_index]
 
         if self.transform is not None:
             video = self.transform(video)
 
-        return video, audio, class_index
-    
+        return video, class_index
+
     def __get_dataset_name__(self):
         return self.dataset_name
