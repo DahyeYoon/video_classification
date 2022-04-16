@@ -108,7 +108,7 @@ class CUSTOM_DATASET(VisionDataset):
 
     def _select_fold(self, video_list: List[str], annotation_path: str, fold: int, train: bool) -> List[int]:
         name = "train" if train else "test"
-        name = f"{name}list{fold:02d}.txt"
+        name = f"{name}list.txt"
         f = os.path.join(annotation_path, name)
         selected_files = set()
         with open(f) as fid:
