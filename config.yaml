@@ -18,15 +18,15 @@ Datasets:
         classInd_path: None
         num_classes : 51
   UCF101:
-        video_path: 'datasets/UCF101/video_data'
+        video_path: 'datasets/UCF101/video_data_2'
         annotation_path : 'datasets/UCF101/ucfTrainTestlist/'
-        classInd_path: 'datasets/UCF101/ucfTrainTestlist/classInd.txt'
+        classInd_path: 'datasets/UCF101/classInd.txt'
         num_classes : 101
   Hyperparams:
     num_frames : 16 
     clip_steps : 1
     num_workers : 0
     batch_size: 4
-    shuffle: True
+    shuffle: False
     height: 112
     width: 112
