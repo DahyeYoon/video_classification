@@ -38,7 +38,7 @@ Tested on MacOSX 12.2.1. and Python 3.8.1.
 
 
 ---
-**[Note] A brief guide for deploying models with AWS** 
+## A brief guide for deploying models with AWS
 1. If the size of external libraries is smaller than 250MB,
    - Import libraries in Lambda Function by adding the libraries to a Lambda Layer
      - To do so, compress the libraries into "python.zip" and upload it to the Lambda Layer
